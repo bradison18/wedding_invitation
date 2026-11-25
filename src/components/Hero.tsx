@@ -1,3 +1,4 @@
+import { sitePath } from '@/lib/links';
 import Image from 'next/image';
 import { wedding } from '@/config/wedding';
 import embrace from '@/photos/embrace.jpg';
@@ -64,7 +65,7 @@ export function Hero() {
         <div className="m-info">
           <p className="m-date">{muhurtham.date.en}</p>
           <p>{venue.name.en}, {city.en}</p>
-          <p className="m-cta"><a className="btn big" href="/rsvp">Join us</a><a className="quiet" href={venue.map} target="_blank" rel="noreferrer">Google Maps</a><a className="quiet" href="#events">Add to calendar</a></p>
+          <p className="m-cta"><a className="btn big" href={sitePath('/rsvp/')}>Join us</a><a className="quiet" href={venue.map} target="_blank" rel="noreferrer">Google Maps</a><a className="quiet" href="#events">Add to calendar</a></p>
         </div>
       </div>
     </section>

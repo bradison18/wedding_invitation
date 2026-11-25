@@ -1,4 +1,5 @@
 import { wedding, type EventItem } from '@/config/wedding';
+export const sitePath = (path: string) => (process.env.NEXT_PUBLIC_BASE_PATH || '') + path;
 export const waLink = (text: string, to = wedding.whatsapp) => `https://wa.me/${to}?text=${encodeURIComponent(text)}`;
 const z = (iso: string) => new Date(iso).toISOString().replace(/[-:]|\.\d{3}/g, '');
 const day = (s: string) => s.replace(/-/g, '');
@@ -10,6 +11,10 @@ export function ics(list: EventItem[]) {
     ...list.flatMap(e => ['BEGIN:VEVENT', `UID:${e.id}@krishna-theeram`, 'DTSTAMP:20261101T000000Z', `DTSTART${stamp(e.start)}`, `DTEND${stamp(e.end)}`,
       `SUMMARY:${esc(`${e.name.en}: ${title}`)}`, `LOCATION:${esc(`${e.venue.en}`)}`, 'END:VEVENT']),
     'END:VCALENDAR', ''].join('\r\n');
+}
+export function calendarDownload(event: EventItem) {
+  if (!process.env.NEXT_PUBLIC_BASE_PATH) return `/calendar.ics?event=${event.id}`;
+  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics([event]))}`;
 }
 export function gcal(e: EventItem) {
   const f = (s: string) => (s.length === 10 ? day(s) : z(s));

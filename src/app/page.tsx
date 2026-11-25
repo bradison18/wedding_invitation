@@ -1,3 +1,4 @@
+import { sitePath } from '@/lib/links';
 import { wedding as w } from '@/config/wedding';
 import { Curtain } from '@/components/Curtain';
 import { Celebrations } from '@/components/Celebrations';
@@ -28,7 +29,7 @@ export default function Page() {
         </main>
         <footer className="foot"><div className="wrap"><p className="h-te">Thank you</p>
           <div className="families">{w.contacts.map(c => <p key={c.who.en}><b>{c.who.en}</b><br />{c.name.en}{c.phone && <><br /><a href={`tel:${c.phone}`}>{c.phone}</a></>}</p>)}</div>
-          {w.hashtag && <p>{w.hashtag}</p>}<p className="mt-4"><a href="/simple">Simple view</a></p></div></footer>
+          {w.hashtag && <p>{w.hashtag}</p>}<p className="mt-4"><a href={sitePath('/simple/')}>Simple view</a></p></div></footer>
       </div>
       <Curtain /><Stage />
     </>

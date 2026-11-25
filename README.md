@@ -7,6 +7,6 @@
 - **Edit details:** `src/config/wedding.ts`. Empty phone, whatsapp and hashtag stay hidden.
 - **RSVP storage is NOT configured by default.** Copy `.env.example` to `.env.local` and set `RSVP_STORAGE`.
   The built-in rate limiter is per server process; use a shared store if you run several instances.
-- **Hosting:** needs a Node host such as Vercel. The existing GitHub Pages workflow cannot run the RSVP server.
+- **Hosting:** pushes to `main` publish the static invitation at https://bradison18.github.io/wedding_invitation/. On Pages, guests send RSVPs through WhatsApp. A regular Node deployment uses the RSVP storage configuration above.
 - **Share image:** `public/og.jpg` is static; regenerate it if names or dates change.
 - **Personal link:** `/?guest=Name`. **Elders:** `/simple`.
