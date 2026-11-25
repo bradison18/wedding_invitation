@@ -38,7 +38,7 @@ export function Invitation() {
         <p className="inv-invoke">Srirasthu · Subhamasthu · Avighnamasthu</p>
         <h2 className="inv-title">Wedding Invitation</h2>
         <Divider />
-        <p className="inv-lede"><b>{w.groom.parents.en}</b> cordially solicit your gracious presence with family on the auspicious occasion of the marriage of our only son</p>
+        <p className="inv-lede">With the blessings of our elders, our two families cordially solicit your gracious presence with family on the auspicious occasion of the marriage of</p>
         <div className="inv-couple">
           <Person p={w.groom} role="Only son of" side="groom" />
           <p className="inv-with">with</p>
