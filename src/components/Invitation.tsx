@@ -35,10 +35,10 @@ export function Invitation() {
       <span className="roller" aria-hidden="true"><i /><i /></span>
       <div className="sheet"><div className="sheet-in">
         <svg className="inv-crest" viewBox="-150 -120 300 130" aria-hidden="true"><Lamp x={-96} y={0} s={0.95} /><Kalasham x={0} y={0} s={1.2} /><Lamp x={96} y={0} s={0.95} /></svg>
-        <p className="inv-invoke">Srirasthu · Subhamasthu · Avighnamasthu</p>
+        <p className="inv-invoke"><span>Srirasthu</span><i> · </i><span>Subhamasthu</span><i> · </i><span>Avighnamasthu</span></p>
         <h2 className="inv-title">Wedding Invitation</h2>
         <Divider />
-        <p className="inv-lede">With the blessings of our elders, our two families cordially solicit your gracious presence with family on the auspicious occasion of the marriage of</p>
+        <p className="inv-lede">With the blessings of our elders, our two families cordially solicit your gracious presence with family on the auspicious occasion of the marriage&nbsp;of</p>
         <div className="inv-couple">
           <Person p={w.groom} role="Only son of" side="groom" />
           <p className="inv-with">with</p>

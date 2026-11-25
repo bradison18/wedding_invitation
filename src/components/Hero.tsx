@@ -53,7 +53,7 @@ export function Hero() {
         <figure className="m-arch">
           <Halo />
           <svg width="0" height="0" className="absolute" aria-hidden="true"><clipPath id="cusp" clipPathUnits="objectBoundingBox"><path transform="scale(.0025 .00178571)" d={CUSP} /></clipPath></svg>
-          <div className="m-photo"><Image src={embrace} alt={`${bride.name.en} and ${groom.name.en}, seated close together`} sizes="(max-width:768px) 78vw, 420px" preload fetchPriority="high" loading="eager" placeholder="blur" /></div>
+          <div className="m-photo"><Image src={embrace} alt={`${bride.name.en} and ${groom.name.en}, seated close together`} sizes="(max-width:768px) 90vw, 420px" preload fetchPriority="high" loading="eager" placeholder="blur" /></div>
           <svg className="m-frame" viewBox="0 0 400 560" aria-hidden="true">
             <g fill="none" strokeLinejoin="round"><path d={CUSP} stroke={C.ink} strokeWidth="27" /><path d={CUSP} stroke={C.madder} strokeWidth="23" /><path d={CUSP} stroke={C.turmeric} strokeWidth="12" /><path d={CUSP} stroke="#7E1F1A" strokeWidth="9" /><path d={CUSP} stroke="#F6D98A" strokeWidth="4.500" strokeDasharray=".1 11" strokeLinecap="round" /></g>
             <path d="M200-40C214-26 216-14 206-2H194C184-14 186-26 200-40Z" fill={C.turmeric} stroke={C.ink} strokeWidth="2" /><path d="M186-2H214L208 8H192Z" fill={C.madder} stroke={C.ink} strokeWidth="2" />
