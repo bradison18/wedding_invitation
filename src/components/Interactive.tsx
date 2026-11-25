@@ -1,9 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { events, wedding, type Bi } from '@/config/wedding';
+import { wedding, type Bi } from '@/config/wedding';
 import { useL } from '@/lib/client';
-import { gcal } from '@/lib/links';
 import { Scene3D } from './three/Scene3D';
 import { T } from './ui';
 import garlands from '@/photos/garlands.jpg';
@@ -26,7 +25,7 @@ export function Countdown() {
         : <p className="ticks" role="timer">{parts.map(([n, l]) => <span key={l}><span className="num">{(left === null ? '––' : String(n).padStart(2, '0')).split('').map((c, k) => <i key={k}>{c}</i>)}</span><span className="block">{l}</span></span>)}</p>}
         <p className="mt-6 text-lg"><b><T b={wedding.countdown.label} /></b></p>
         <p className="mt-4"><b>Muhurtham:</b> <T b={wedding.muhurtham.date} />, <T b={wedding.muhurtham.time} />. <T b={wedding.muhurtham.panchangam} /></p>
-        <p className="flex flex-wrap gap-3 mt-6"><a className="btn" href={gcal(events[0])} target="_blank" rel="noreferrer">Add to Google Calendar</a><a className="btn ghost" href={wedding.venue.map} target="_blank" rel="noreferrer">Open in Google Maps</a></p></div>
+      </div>
     </div>
   );
 }

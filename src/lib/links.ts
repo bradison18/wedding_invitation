@@ -12,10 +12,6 @@ export function ics(list: EventItem[]) {
       `SUMMARY:${esc(`${e.name.en}: ${title}`)}`, `LOCATION:${esc(`${e.venue.en}`)}`, 'END:VEVENT']),
     'END:VCALENDAR', ''].join('\r\n');
 }
-export function calendarDownload(event: EventItem) {
-  if (!process.env.NEXT_PUBLIC_BASE_PATH) return `/calendar.ics?event=${event.id}`;
-  return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics([event]))}`;
-}
 export function gcal(e: EventItem) {
   const f = (s: string) => (s.length === 10 ? day(s) : z(s));
   return `https://calendar.google.com/calendar/render?${new URLSearchParams({ action: 'TEMPLATE', text: `${e.name.en}: ${wedding.groom.name.en} & ${wedding.bride.name.en}`, dates: `${f(e.start)}/${f(e.end)}`, location: e.venue.en, details: `Map: ${e.map}`, ctz: 'Asia/Kolkata' })}`;
