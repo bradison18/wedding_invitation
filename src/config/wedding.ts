@@ -38,8 +38,6 @@ export const wedding = {
   /** Digits only with country code, e.g. 919876543210. Empty = guest picks the recipient. */
   whatsapp: '',
   hashtag: '',
-  /** Optional licensed audio files in /public. Empty = the built-in synthesised river and drum. */
-  audio: { ambience: '', gattimelam: '' },
 };
 
 /** start/end: ISO with offset, or YYYY-MM-DD for an all-day entry. End times are estimates for calendars only. */

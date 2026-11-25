@@ -10,4 +10,3 @@
 - **Hosting:** needs a Node host such as Vercel. The existing GitHub Pages workflow cannot run the RSVP server.
 - **Share image:** `public/og.jpg` is static; regenerate it if names or dates change.
 - **Personal link:** `/?guest=Name`. **Elders:** `/simple`.
-- **Sound:** original synthesised river and drum. Put licensed nadaswaram files in `public/` and set `wedding.audio`.

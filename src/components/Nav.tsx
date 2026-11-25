@@ -1,7 +1,6 @@
 'use client';
-import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useL } from '@/lib/client';
-import { soundOn, soundSub, toggleSound } from '@/lib/sound';
 import { wedding } from '@/config/wedding';
 import { waLink } from '@/lib/links';
 import { T } from './ui';
@@ -9,7 +8,6 @@ const links = [['dawn', 'Home'], ['shubhalekha', 'Invitation'], ['rings', 'Two r
 export function Nav() {
   const dlg = useRef<HTMLDialogElement>(null), lamp = useRef<HTMLSpanElement>(null);
   const L = useL();
-  const snd = useSyncExternalStore(soundSub, soundOn, () => false);
   const [share, setShare] = useState('');
   useEffect(() => {
     setShare(waLink(`${wedding.groom.name.en} & ${wedding.bride.name.en}\n${wedding.muhurtham.date.en}, ${wedding.city.en}\n${location.origin}\nMap: ${wedding.venue.map}`, ''));
@@ -23,7 +21,6 @@ export function Nav() {
       <nav className="nav" aria-label="Main">
         <button className="navbtn" onClick={() => dlg.current?.showModal()} aria-haspopup="dialog"><svg width="20" height="14" aria-hidden="true"><path d="M0 2Q5-1 10 2T20 2M0 7Q5 4 10 7T20 7M0 12Q5 9 10 12T20 12" stroke="currentColor" strokeWidth="1.800" fill="none" /></svg><T b={{ en: 'Menu' }} /></button>
         <span className="flex items-center">
-          <button className="navbtn" aria-pressed={snd} onClick={() => toggleSound()} aria-label={L({ en: 'Sound' })}><svg width="20" height="18" aria-hidden="true"><path d="M1 6H5L10 1V17L5 12H1Z" fill="currentColor" />{snd ? <path d="M13 5Q16 9 13 13M16 2Q21 9 16 16" stroke="currentColor" strokeWidth="1.800" fill="none" /> : <path d="M13 6l6 6M19 6l-6 6" stroke="currentColor" strokeWidth="1.800" />}</svg></button>
           <a className="btn small" href="/rsvp"><T b={{ en: 'RSVP' }} /></a>
         </span>
         <span className="thread" aria-hidden="true"><span ref={lamp} className="lampdot"><svg viewBox="0 0 28 30"><path d="M14 2Q20 12 14 17Q8 12 14 2Z" fill="#E0A11B" stroke="#9E2B25" /><path d="M3 17Q14 24 25 17Q22 28 14 28Q6 28 3 17Z" fill="#B88A3B" stroke="#221A16" /></svg></span></span>

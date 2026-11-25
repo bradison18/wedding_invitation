@@ -17,7 +17,7 @@ export function Celebrations() {
       <svg width="0" height="0" className="absolute" aria-hidden="true"><clipPath id="ogee" clipPathUnits="objectBoundingBox"><path transform="scale(.003125 .00238095)" d={OGEE} /></clipPath></svg>
       {events.map((e, i) => {
         return (
-          <article key={e.id} className={`gate g-${e.id}`} style={{ '--tone': e.tone, '--d': `${i * 0.25}s` } as React.CSSProperties}>
+          <article key={e.id} suppressHydrationWarning className={`gate g-${e.id}`} style={{ '--tone': e.tone, '--d': `${i * 0.25}s` } as React.CSSProperties}>
             <div className="gate-arch" aria-hidden="true">
               <div className="gate-in">
                 <Image className="gate-scene" src={`/doorways/${e.id}.webp`} alt="" fill sizes="(min-width: 1000px) min(28vw, 380px), (max-width: 420px) 90vw, 380px" />
