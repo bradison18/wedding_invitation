@@ -51,12 +51,14 @@ const photos = [
   { src: standing, cls: 'f', alt: b('The couple standing beneath hanging flowers') },
 ];
 export function Album() {
-  const L = useL(), dlg = useRef<HTMLDialogElement>(null); const [i, setI] = useState(0);
+  const L = useL(), dlg = useRef<HTMLDialogElement>(null), swipe = useRef<[number, number] | null>(null); const [i, setI] = useState(0);
   const mv = (n: number) => setI(v => (v + n + photos.length) % photos.length);
   return (
     <>
       <div className="album">{photos.map((p, n) => <button key={p.cls} className={`ph ${p.cls}`} onClick={() => { setI(n); dlg.current?.showModal(); }} aria-label={`${L(b('Enlarge'))}: ${L(p.alt)}`}><Image src={p.src} alt="" sizes="(max-width:768px) 92vw, 45vw" placeholder="blur" /></button>)}</div>
-      <dialog ref={dlg} className="lightbox" aria-label={L(b('Photos'))} onKeyDown={e => { if (e.key === 'ArrowRight') mv(1); if (e.key === 'ArrowLeft') mv(-1); }} onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}>
+      <dialog ref={dlg} className="lightbox" aria-label={L(b('Photos'))} onKeyDown={e => { if (e.key === 'ArrowRight') mv(1); if (e.key === 'ArrowLeft') mv(-1); }} onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}
+        onTouchStart={e => { swipe.current = e.touches.length === 1 ? [e.touches[0].clientX, e.touches[0].clientY] : null; }}
+        onTouchEnd={e => { const s = swipe.current; swipe.current = null; if (!s) return; const x = e.changedTouches[0].clientX - s[0], y = e.changedTouches[0].clientY - s[1]; if (Math.abs(x) > 45 && Math.abs(x) > Math.abs(y) * 1.4) mv(x < 0 ? 1 : -1); }}>
         <Image src={photos[i].src} alt={L(photos[i].alt)} sizes="92vw" />
         <div className="flex justify-between items-center gap-2"><button className="btn ghost dark" onClick={() => mv(-1)}><T b={b('Previous')} /></button><span aria-live="polite">{i + 1} / {photos.length}</span><button className="btn ghost dark" onClick={() => mv(1)}><T b={b('Next')} /></button><button className="btn ghost dark" onClick={() => dlg.current?.close()}><T b={b('Close')} /></button></div>
       </dialog>
