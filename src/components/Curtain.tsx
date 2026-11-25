@@ -24,8 +24,8 @@ c*=.94+.07*s;gl_FragColor=vec4(c,1.)*.94;}`;
 export function Curtain() {
   const [gone, setGone] = useState(false);
   const [gl, setGl] = useState(true);
-  const root = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null), ring = useRef<HTMLSpanElement>(null);
-  const st = useRef({ hold: 0, down: false, drop: -1, done: false });
+  const root = useRef<HTMLDivElement>(null), cv = useRef<HTMLCanvasElement>(null);
+  const st = useRef({ drop: -1, done: false });
 
   function leave() {
     if (st.current.drop >= 0 || st.current.done) return;
@@ -54,7 +54,7 @@ export function Curtain() {
         draw = t => {
           const dpr = Math.min(devicePixelRatio, 1.25), w = innerWidth * dpr | 0, h = innerHeight * dpr | 0;
           if (c.width !== w || c.height !== h) { c.width = w; c.height = h; g.viewport(0, 0, w, h); }
-          g.uniform1f(ud, Math.max(0, st.current.drop)); g.uniform1f(ut, t / 1000); g.uniform1f(uh, st.current.hold); g.uniform2f(ur, innerWidth, innerHeight);
+          g.uniform1f(ud, Math.max(0, st.current.drop)); g.uniform1f(ut, t / 1000); g.uniform1f(uh, 0); g.uniform2f(ur, innerWidth, innerHeight);
           g.clear(g.COLOR_BUFFER_BIT); g.drawArrays(g.TRIANGLES, 0, v.length / 2);
         };
       }
@@ -63,35 +63,30 @@ export function Curtain() {
     let raf = 0, last = performance.now(), drawn = -999;
     const loop = (t: number) => {
       const dt = Math.max(0, Math.min(0.05, (t - last) / 1000)), s = st.current; last = t;
-      if (s.drop < 0) { s.hold = Math.max(0, Math.min(1, s.hold + (s.down ? dt / 1.3 : -dt * 1.5))); if (s.hold >= 1) leaveRef.current(); }
-      else { s.drop += dt / 1.4; if (s.drop >= 1.05) { setGone(true); return; } }
-      ring.current?.style.setProperty('--p', String(s.hold));
+      if (s.drop >= 0) { s.drop += dt / 1.4; if (s.drop >= 1.05) { setGone(true); return; } }
       // At rest the cloth only breathes, so a few frames a second are enough.
-      if (s.drop >= 0 || s.down || s.hold > 0 || t - drawn > 120) { drawn = t; draw?.(t); }
+      if (s.drop >= 0 || t - drawn > 120) { drawn = t; draw?.(t); }
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
     const key = (e: KeyboardEvent) => { if (e.key === 'Escape') leaveRef.current(); };
     addEventListener('keydown', key);
-    const up = () => { st.current.down = false; }; addEventListener('pointerup', up); addEventListener('pointercancel', up); addEventListener('blur', up);
-    return () => { cancelAnimationFrame(raf); removeEventListener('keydown', key); removeEventListener('pointerup', up); removeEventListener('pointercancel', up); removeEventListener('blur', up); main?.removeAttribute('inert'); html.style.overflow = ''; };
+    return () => { cancelAnimationFrame(raf); removeEventListener('keydown', key); main?.removeAttribute('inert'); html.style.overflow = ''; };
   }, []);
   useEffect(() => { if (gone) { document.getElementById('page')?.removeAttribute('inert'); document.documentElement.style.overflow = ''; document.documentElement.dataset.entered = '1'; } }, [gone]);
   if (gone) return null;
-  const set = (v: boolean) => { st.current.down = v; };
   return (
-    <div ref={root} className={`curtain ${gl ? '' : 'no-gl'}`} role="dialog" aria-modal="true" aria-label="Welcome curtain" tabIndex={-1}>
+    <div ref={root} className={`curtain ${gl ? '' : 'no-gl'}`} role="dialog" aria-modal="true" aria-label="Welcome curtain" tabIndex={-1} onClick={leave}>
       <div className="behind" aria-hidden="true" />
       <canvas ref={cv} aria-hidden="true" />
       <svg className="shadows" viewBox="0 0 400 260" aria-hidden="true"><g filter="url(#sil)"><Toy x={110} y={250} kind="groom" s={1.2} /><Toy x={290} y={250} kind="bride" s={1.2} flip /></g><filter id="sil"><feColorMatrix values="0 0 0 0 .38 0 0 0 0 .18 0 0 0 0 .08 0 0 0 .34 0" /><feGaussianBlur stdDeviation="4" /></filter></svg>
       <div className="curtain-copy">
         <p className="bless">Srirasthu · Subhamasthu · Avighnamasthu</p>
-        <button className="hold" onPointerDown={e => { e.preventDefault(); e.currentTarget.focus(); set(true); }} onContextMenu={e => e.preventDefault()}
-          onKeyDown={e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); set(true); } }} onKeyUp={() => set(false)} onBlur={() => set(false)}>
-          <span ref={ring} className="leafring"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 8C100 30 108 74 60 112C12 74 20 30 60 8Z" fill="#2F5D3A" stroke="#221A16" strokeWidth="2.500" /><path d="M60 16V106M60 40Q80 44 92 58M60 40Q40 44 28 58M60 66Q76 70 86 82M60 66Q44 70 34 82" stroke="#8DB36B" strokeWidth="2" fill="none" /><path d="M42 66Q44 48 60 50Q78 48 78 66Q70 78 60 77Q48 78 42 66Z" fill="#6B3A1E" stroke="#221A16" strokeWidth="2" /><g fill="#E0A11B">{[[52, 60], [62, 57], [69, 66], [57, 69], [64, 72]].map(([x, y]) => <ellipse key={x} cx={x} cy={y} rx="3" ry="1.500" />)}</g></svg></span>
-          <span><T b={{ en: 'Press and hold to lower the curtain' }} /></span>
+        <button className="hold" onClick={leave}>
+          <span className="leafring"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 8C100 30 108 74 60 112C12 74 20 30 60 8Z" fill="#2F5D3A" stroke="#221A16" strokeWidth="2.500" /><path d="M60 16V106M60 40Q80 44 92 58M60 40Q40 44 28 58M60 66Q76 70 86 82M60 66Q44 70 34 82" stroke="#8DB36B" strokeWidth="2" fill="none" /><path d="M42 66Q44 48 60 50Q78 48 78 66Q70 78 60 77Q48 78 42 66Z" fill="#6B3A1E" stroke="#221A16" strokeWidth="2" /><g fill="#E0A11B">{[[52, 60], [62, 57], [69, 66], [57, 69], [64, 72]].map(([x, y]) => <ellipse key={x} cx={x} cy={y} rx="3" ry="1.500" />)}</g></svg></span>
+          <span><T b={{ en: 'Touch or click to open' }} /></span>
         </button>
-        <div className="flex gap-3 justify-center flex-wrap"><button className="btn ghost" onClick={() => leave()}><T b={{ en: 'Enter' }} /></button><button className="btn ghost" onClick={() => { st.current.done = true; try { localStorage.setItem('kt-entered', '1'); } catch {} setGone(true); }}><T b={{ en: 'Skip' }} /></button></div>
+        <div className="flex gap-3 justify-center flex-wrap"><button className="btn ghost" onClick={() => leave()}><T b={{ en: 'Enter' }} /></button><button className="btn ghost" onClick={e => { e.stopPropagation(); st.current.done = true; try { localStorage.setItem('kt-entered', '1'); } catch {} setGone(true); }}><T b={{ en: 'Skip' }} /></button></div>
       </div>
     </div>
   );

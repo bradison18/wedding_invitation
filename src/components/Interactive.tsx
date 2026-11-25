@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { events, wedding, type Bi } from '@/config/wedding';
 import { useL } from '@/lib/client';
 import { gcal } from '@/lib/links';
-import { RsvpForm } from './RsvpForm';
 import { Scene3D } from './three/Scene3D';
 import { T } from './ui';
 import garlands from '@/photos/garlands.jpg';
@@ -23,7 +22,6 @@ export function Countdown() {
   const parts = [[Math.floor(m / 1440), 'days'], [Math.floor(m / 60) % 24, 'hours'], [Math.floor(m) % 60, 'minutes'], [Math.floor(m * 60) % 60, 'seconds']] as const;
   return (
     <div className="countdown">
-      <div><Scene3D kind="kalasham" className="kal" label="A brass kalasham with coconut and mango leaves turning above a rice-flour muggu ringed with lamps" action="Spin the kalasham" /></div>
       <div>{left !== null && left <= 0 ? <p className="lede">The celebration has begun. Thank you for your blessings.</p>
         : <p className="ticks" role="timer">{parts.map(([n, l]) => <span key={l}><span className="num">{(left === null ? '––' : String(n).padStart(2, '0')).split('').map((c, k) => <i key={k}>{c}</i>)}</span><span className="block">{l}</span></span>)}</p>}
         <p className="mt-6 text-lg"><b><T b={wedding.countdown.label} /></b></p>
@@ -62,18 +60,6 @@ export function Album() {
         <Image src={photos[i].src} alt={L(photos[i].alt)} sizes="92vw" />
         <div className="flex justify-between items-center gap-2"><button className="btn ghost dark" onClick={() => mv(-1)}><T b={b('Previous')} /></button><span aria-live="polite">{i + 1} / {photos.length}</span><button className="btn ghost dark" onClick={() => mv(1)}><T b={b('Next')} /></button><button className="btn ghost dark" onClick={() => dlg.current?.close()}><T b={b('Close')} /></button></div>
       </dialog>
-    </>
-  );
-}
-
-/* ---------- Night ---------- */
-export function Night() {
-  const [lamps, setLamps] = useState<string[]>([]);
-  useEffect(() => { const f = (e: Event) => setLamps(l => [...l, (e as CustomEvent<string>).detail]); addEventListener('kt-blessing', f); return () => removeEventListener('kt-blessing', f); }, []);
-  return (
-    <>
-      <RsvpForm />
-      <div className="floaters" aria-live="polite">{lamps.map((t, n) => <span key={n} className="floater"><span>Your blessing: {t}</span></span>)}</div>
     </>
   );
 }

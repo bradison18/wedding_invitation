@@ -5,7 +5,7 @@ import { Invitation } from '@/components/Invitation';
 import { Hero } from '@/components/Hero';
 import { Nav } from '@/components/Nav';
 import { Stage } from '@/components/Stage';
-import { Album, Countdown, Night, Rings } from '@/components/Interactive';
+import { Album, Countdown, Rings } from '@/components/Interactive';
 import { Scene3D } from '@/components/three/Scene3D';
 import { Vine } from '@/components/art';
 import { H, Section } from '@/components/ui';
@@ -24,7 +24,6 @@ export default function Page() {
           <Section id="album" label="Album" form="saree" from="l" to="r" ground="#EBC4A2"><div className="relative"><Vine className="vine" /><H title="The album" /></div><Album /></Section>
           <div className="dusk" aria-hidden="true" />
           <section className="night3d" aria-label="Lamps on the Krishna"><Scene3D kind="night" className="fill" label="Oil lamps drifting on the night river below the lights of Prakasam Barrage" action="Float a lamp" /></section>
-          <Section id="night" label="RSVP" form="stars" from="r" to="l" ground="#16294A" className="night"><H title="Will you join us?" kicker="Send your reply. Each blessing becomes a lamp on the river." /><Night /></Section>
         </main>
         <footer className="foot"><div className="wrap"><p className="h-te">Thank you</p>
           <div className="families">{w.contacts.map(c => <p key={c.who.en}><b>{c.who.en}</b><br />{c.name.en}{c.phone && <><br /><a href={`tel:${c.phone}`}>{c.phone}</a></>}</p>)}</div>
