@@ -29,7 +29,7 @@ export function Curtain() {
 
   function leave() {
     if (st.current.drop >= 0 || st.current.done) return;
-    try { localStorage.setItem('kt-entered', '1'); } catch {}
+
     if (reduced()) { st.current.done = true; root.current?.classList.add('fading'); setTimeout(() => setGone(true), 300); return; }
     st.current.drop = 0; root.current?.classList.add('dropping');
   }
@@ -86,7 +86,7 @@ export function Curtain() {
           <span className="leafring"><svg viewBox="0 0 120 120" aria-hidden="true"><path d="M60 8C100 30 108 74 60 112C12 74 20 30 60 8Z" fill="#2F5D3A" stroke="#221A16" strokeWidth="2.500" /><path d="M60 16V106M60 40Q80 44 92 58M60 40Q40 44 28 58M60 66Q76 70 86 82M60 66Q44 70 34 82" stroke="#8DB36B" strokeWidth="2" fill="none" /><path d="M42 66Q44 48 60 50Q78 48 78 66Q70 78 60 77Q48 78 42 66Z" fill="#6B3A1E" stroke="#221A16" strokeWidth="2" /><g fill="#E0A11B">{[[52, 60], [62, 57], [69, 66], [57, 69], [64, 72]].map(([x, y]) => <ellipse key={x} cx={x} cy={y} rx="3" ry="1.500" />)}</g></svg></span>
           <span><T b={{ en: 'Touch or click to open' }} /></span>
         </button>
-        <div className="flex gap-3 justify-center flex-wrap"><button className="btn ghost" onClick={() => leave()}><T b={{ en: 'Enter' }} /></button><button className="btn ghost" onClick={e => { e.stopPropagation(); st.current.done = true; try { localStorage.setItem('kt-entered', '1'); } catch {} setGone(true); }}><T b={{ en: 'Skip' }} /></button></div>
+        <div className="flex gap-3 justify-center flex-wrap"><button className="btn ghost" onClick={() => leave()}><T b={{ en: 'Enter' }} /></button><button className="btn ghost" onClick={e => { e.stopPropagation(); st.current.done = true; setGone(true); }}><T b={{ en: 'Skip' }} /></button></div>
       </div>
     </div>
   );
