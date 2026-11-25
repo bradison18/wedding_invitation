@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { events } from '@/config/wedding';
-import { gcal, sitePath, calendarDownload } from '@/lib/links';
+import { sitePath } from '@/lib/links';
+import { EventLinks } from '@/components/EventLinks';
 import { C } from './art';
 
 /* Three carved doorways. The doors swing open as each one scrolls into view. */
@@ -29,7 +30,7 @@ export function Celebrations() {
               <h3>{e.name.en}</h3>
               <p className="gate-date">{e.date.en}</p>{e.time.en && <p>{e.time.en}</p>}
               <p className="gate-venue">{e.venue.en}</p>
-              <p className="gate-links"><a className="btn" href={e.map} target="_blank" rel="noreferrer" aria-label={`Google Maps: ${e.name.en}`}>Google Maps</a><a className="btn ghost" href={gcal(e)} target="_blank" rel="noreferrer" aria-label={`Google Calendar: ${e.name.en}`}>Google Calendar</a><a className="quiet" href={calendarDownload(e)} download={`${e.id}.ics`} aria-label={`Apple / other calendar: ${e.name.en}`}>Apple / other</a></p>
+              <EventLinks event={e} />
             </div>
           </article>);
       })}

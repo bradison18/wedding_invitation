@@ -33,6 +33,9 @@ jobs:
           test -s out/index.html
           test -s out/simple/index.html
           test -s out/rsvp/index.html
+          for event in dinner pelli reception; do
+            grep -q "UID:${event}@krishna-theeram" "out/calendar/${event}.ics"
+          done
       - uses: actions/upload-pages-artifact@v5
         with:
           path: out
