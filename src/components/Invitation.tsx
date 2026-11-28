@@ -50,7 +50,7 @@ export function Invitation() {
           <div><dt>Venue</dt><dd><b>{w.venue.name.en}</b><br />{w.venue.address.en}</dd></div>
           <div><dt>Dinner</dt><dd><b>{events[0].date.en}</b><br />{events[0].time.en}</dd></div>
         </dl>
-        <p className="inv-sign">Yours,<br /><b>{w.contacts[0].name.en}</b></p><p>With best compliments from near and dear</p>
+        <p className="inv-sign">Yours,<br /><b>{w.contacts[0].name.en}</b><br /><small>(Groom&apos;s parents)</small><br /><b>{w.contacts[1].name.en}</b><br /><small>(Bride&apos;s parents)</small></p><p>With best compliments from near and dear</p>
       </div></div>
       <span className="roller low" aria-hidden="true"><i /><i /></span>
     </div>

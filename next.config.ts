@@ -7,7 +7,7 @@ const config: NextConfig = {
   poweredByHeader: false,
   basePath,
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
-  images: { formats: ['image/avif', 'image/webp'], unoptimized: pages },
+  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 90], unoptimized: pages },
   ...(pages && {
     output: 'export',
     trailingSlash: true,

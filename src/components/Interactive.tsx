@@ -11,6 +11,7 @@ import embrace from '@/photos/embrace.jpg';
 import rings from '@/photos/rings.jpg';
 import corridor from '@/photos/corridor.jpg';
 import seated from '@/photos/seated.jpg';
+import family from '@/photos/family.jpg';
 const b = (en: string): Bi => ({ en });
 
 /* ---------- Countdown ---------- */
@@ -48,13 +49,14 @@ const photos = [
   { src: corridor, cls: 'd', alt: b('The couple in a corridor, holding lotus buds') },
   { src: seated, cls: 'e', alt: b('The couple seated side by side in a hall') },
   { src: standing, cls: 'f', alt: b('The couple standing beneath hanging flowers') },
+  { src: family, cls: 'g', alt: b('The couple seated on stage, surrounded by family') },
 ];
 export function Album() {
   const L = useL(), dlg = useRef<HTMLDialogElement>(null), swipe = useRef<[number, number] | null>(null); const [i, setI] = useState(0);
   const mv = (n: number) => setI(v => (v + n + photos.length) % photos.length);
   return (
     <>
-      <div className="album">{photos.map((p, n) => <button key={p.cls} className={`ph ${p.cls}`} onClick={() => { setI(n); dlg.current?.showModal(); }} aria-label={`${L(b('Enlarge'))}: ${L(p.alt)}`}><Image src={p.src} alt="" sizes="(max-width:768px) 92vw, 45vw" placeholder="blur" /></button>)}</div>
+      <div className="album">{photos.map((p, n) => <button key={p.cls} className={`ph ${p.cls}`} onClick={() => { setI(n); dlg.current?.showModal(); }} aria-label={`${L(b('Enlarge'))}: ${L(p.alt)}`}><Image src={p.src} alt="" sizes={p.cls === 'g' ? '(max-width:768px) 100vw, 1200px' : '(max-width:768px) 92vw, 45vw'} quality={p.cls === 'g' ? 90 : undefined} placeholder="blur" /></button>)}</div>
       <dialog ref={dlg} className="lightbox" aria-label={L(b('Photos'))} onKeyDown={e => { if (e.key === 'ArrowRight') mv(1); if (e.key === 'ArrowLeft') mv(-1); }} onClick={e => { if (e.target === e.currentTarget) e.currentTarget.close(); }}
         onTouchStart={e => { swipe.current = e.touches.length === 1 ? [e.touches[0].clientX, e.touches[0].clientY] : null; }}
         onTouchEnd={e => { const s = swipe.current; swipe.current = null; if (!s) return; const x = e.changedTouches[0].clientX - s[0], y = e.changedTouches[0].clientY - s[1]; if (Math.abs(x) > 45 && Math.abs(x) > Math.abs(y) * 1.4) mv(x < 0 ? 1 : -1); }}>

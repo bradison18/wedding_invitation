@@ -8,7 +8,7 @@ const b = (en: string): Bi => ({ en });
 export const wedding = {
   groom: {
     name: b('Srinivasa Bharadwaja'), formal: b('Chi. Srinivasa Bharadwaja'),
-    parents: b('Mr. Shambuni Venkata Satyanarayana & Mrs. Satya Sri Visalakshi'),
+    parents: b('Mr. Shambuni Venkata Satyanarayana & Mrs. Satya Sri Visalakshmi'),
     grand: b('Grandson of Late Sri Shambuni Sambaiah & Smt. Shyamalamba'),
   },
   bride: {
@@ -32,7 +32,7 @@ export const wedding = {
     map: 'https://www.google.com/maps/search/?api=1&query=Telugu+Film+Chamber+Hall%2C+opp+Sailaja+Theatre%2C+Gandhinagar%2C+Vijayawada',
   },
   contacts: [
-    { who: b("Groom's family"), name: b('Shambuni Venkata Satyanarayana & Smt. Satya Sri Visalakshi'), phone: '' },
+    { who: b("Groom's family"), name: b('Shambuni Venkata Satyanarayana & Smt. Satya Sri Visalakshmi'), phone: '' },
     { who: b("Bride's family"), name: b('Gattupalle Rajasekhar & Smt. Radha'), phone: '' },
   ],
   /** Digits only with country code, e.g. 919876543210. Empty = guest picks the recipient. */
